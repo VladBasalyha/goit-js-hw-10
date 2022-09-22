@@ -43,8 +43,8 @@ function createCountriesMarkup(countries) {
 	const markup = countries
 		.map(country => {
 			return `
-			<li class = country-item>
-			<img src = ${country.flags.svg} width = 40 height = 30> </img>
+			<li class = country-list__item>
+			<img class = country-list__image src = ${country.flags.svg} width = 40 height = 30> </img>
 			<span class = "country-name">${country.name.official}</span>
 			</li>`;
 		})
@@ -56,12 +56,12 @@ function createCountryInfoMarkup(countries) {
 	const markup = countries
 		.map(({ flags, name, capital, population, languages }) => {
 			return `
-			<div class = "country">
+			<div class = "country-info">
 			<img src = ${flags.svg} width = 40 height = 30> </img>
 			<b class = "country-name">${name.official}</b>
-			<p>Capital: ${capital}</p>
-			<p>Population: ${population}</p>
-			<p>Languages: ${Object.values(languages)}</p>
+			<p>Capital: <b> ${capital}</b></p>
+			<p>Population:<b> ${population}</b></p>
+			<p>Languages: <b> ${Object.values(languages)}</b></p>
 			</div>
 			`;
 		})
