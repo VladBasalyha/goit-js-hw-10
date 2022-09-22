@@ -1,6 +1,5 @@
 import './css/styles.css';
 import API from './js/fetchCountries';
-import MARKUP from './js/markup-countries';
 import { debounce } from 'throttle-debounce';
 import Notiflix from 'notiflix';
 const DEBOUNCE_DELAY = 300;
@@ -11,17 +10,18 @@ const refs = {
 	countryInfo: document.querySelector('.country-info'),
 };
 const { inputText, countryList, countryInfo } = refs;
-
+const countryName = inputText.value.trim();
 inputText.addEventListener('input', debounce(DEBOUNCE_DELAY, onSearchInput));
 
 function onSearchInput(evt) {
-	return API.fetchСountries(evt.target.value.trim())
+	evt.preventDefault();
+	return API.fetchСountries(countryName)
 		.then(countries => {
 			if (countries.length > 10) {
 				countryList.innerHTML = '';
 				return Notiflix.Notify.info(
 					'Too many matches found. Please enter a more specific name.',
-					1000
+					2000
 				);
 			} else if (countries.length === 1) {
 				createCountryInfoMarkup(countries);
@@ -32,7 +32,7 @@ function onSearchInput(evt) {
 			}
 		})
 		.catch(error => {
-			Notiflix.Notify.failure('Oops, there is no country with that name', 1000);
+			Notiflix.Notify.failure('Oops, there is no country with that name');
 			countryInfo.innerHTML = '';
 			countryList.innerHTML = '';
 		});
